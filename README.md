@@ -1,3 +1,10 @@
+# iterative dpoもどき
+1. SFTデータのpromptをもとに、モデルが出力を生成
+    - もとの回答をaccept
+    - 出力された回答をreject
+2. 1.のデータでDPO
+3. 1.に戻る
+
 
 ~~~
 batch_size=2048
