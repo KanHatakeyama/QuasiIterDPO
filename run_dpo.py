@@ -36,6 +36,7 @@ def main():
     run_dpo(model, tokenizer, dpo_dataset, run_name=args.run_name)
     
     model.save_pretrained(f"{args.out_dir}/{args.generation}")
+    tokenizer.save_pretrained(f"{args.out_dir}/{args.generation}")
 
 if __name__ == "__main__":
     main()
