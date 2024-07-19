@@ -9,7 +9,7 @@
 - MIT
 
 ~~~
-batch_size=4096
+batch_size=2048
 dataset_name=kanhatakeyama/0717-calm3-22b-random-genre-inst-sft-tsub-part
 initial_model=team-hatakeyama-phase2/8B-nishijima-tanuki8b_dpo_full_001-checkpoint-137
 
