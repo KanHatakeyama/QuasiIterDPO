@@ -45,7 +45,9 @@ def main():
     sft_dataset=sft_dataset.shuffle()
     record_list = get_specific_batch(sft_dataset, batch_size=args.batch_size, batch_id=args.generation)
     
-    prompt_list = [gen_prompt(r["prompt"]) for r in record_list]
+    #prompt_list = [gen_prompt(r["prompt"]) for r in record_list]
+    prompt_list = [(r["prompt"]) for r in record_list]
+    print(prompt_list[:3])
     predictions = ask_vllm(llm, prompt_list, args.max_tokens, args.repetition_penalty)
     
     for record, pred in zip(record_list, predictions):
