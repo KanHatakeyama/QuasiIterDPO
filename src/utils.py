@@ -14,20 +14,34 @@ def ask(prompt,pipe,max_length=512):
 
 
 def get_specific_batch(sft_dataset, batch_size, batch_id):
+    print("dataset keys:",sft_dataset.features.keys())
     start_index = batch_id * batch_size
     end_index = start_index + batch_size
-    
-    if start_index >= len(sft_dataset["output"]):
+    if "output" in sft_dataset.features.keys():
+        chosen_key="output"
+    elif "chosen" in sft_dataset.features.keys():
+        chosen_key="chosen"
+    else:
+        raise ValueError("No output or chosen key found in dataset")
+
+    if "instruction" in sft_dataset.features.keys():
+        inst_key="instruction"
+    elif "prompt" in sft_dataset.features.keys():
+        inst_key="prompt"
+    else:
+        raise ValueError("No instruction or prompt key found in dataset")
+
+    if start_index >= len(sft_dataset[chosen_key]):
         return []  # If the batch_id is out of range, return an empty list
-    
+
     batch = {
-        "instruction": sft_dataset["instruction"][start_index:end_index],
+        "instruction": sft_dataset[inst_key][start_index:end_index],
         #"input": sft_dataset["input"][start_index:end_index],
-        "output": sft_dataset["output"][start_index:end_index]
+        "output": sft_dataset[chosen_key][start_index:end_index]
     }
     
     record_list = []
-    for j in range(len(batch["output"])):
+    for j in range(len(batch["instruction"])):
         record = {
             #"prompt": batch["instruction"][j] + batch["input"][j],
             "prompt": batch["instruction"][j] ,

@@ -7,7 +7,7 @@ def run_dpo(model,tokenizer,dpo_dataset,
     training_args = TrainingArguments(
         output_dir= f"./{run_name}",
         overwrite_output_dir=True,
-        per_device_train_batch_size=1,
+        per_device_train_batch_size=2,
         gradient_accumulation_steps=64,
         learning_rate=5.0e-7,
         warmup_ratio=0.1,
