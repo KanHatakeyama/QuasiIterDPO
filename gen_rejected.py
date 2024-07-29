@@ -23,7 +23,7 @@ def ask_vllm(llm, prompts, max_tokens, repetition_penalty):
     outputs = llm.generate(
         prompts,
         sampling_params=SamplingParams(
-            temperature=0.7,
+            temperature=0.01,
             max_tokens=max_tokens,
             repetition_penalty=repetition_penalty,
         )
@@ -41,6 +41,8 @@ def main():
         sft_dataset = load_dataset(args.sft_dataset_name, split=args.split)
     except:
         sft_dataset = load_from_disk(args.sft_dataset_name )
+    
+    sft_dataset=sft_dataset.shuffle()
     record_list = get_specific_batch(sft_dataset, batch_size=args.batch_size, batch_id=args.generation)
     
     prompt_list = [gen_prompt(r["prompt"]) for r in record_list]
